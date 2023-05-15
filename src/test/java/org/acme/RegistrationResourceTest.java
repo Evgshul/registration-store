@@ -11,7 +11,7 @@ class RegistrationResourceTest {
 
     @Test
     void testRegistration() {
-        var regIvan = new RegistrationDTO("Ivan");
+        var regIvan = new RegistrationDTO("Ivan", "Sidirov", "inan@mail.org");
         given()
                 .when()
                 .body(regIvan)
@@ -21,5 +21,4 @@ class RegistrationResourceTest {
                 .then()
                 .statusCode(204);
     }
-
 }

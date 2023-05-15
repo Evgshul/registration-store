@@ -4,7 +4,11 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="db/changeLog_001.xml"/>
-    <include file="db/changeLog_002.xml"/>
+    <changeSet author="Evgeny" id="Add columns surname, email to registrations table">
+        <addColumn tableName="REGISTRATIONS">
+            <column name="SURNAME" type="VARCHAR(255)"/>
+            <column name="EMAIL" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>
