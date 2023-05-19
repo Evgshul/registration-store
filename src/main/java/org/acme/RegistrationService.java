@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
  */
 @ApplicationScoped
 public class RegistrationService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RegistrationService.class);
     @PersistenceContext
     EntityManager em;
 
@@ -29,6 +32,7 @@ public class RegistrationService {
         reg.setName(name);
         reg.setSurname(surname);
         reg.setEmail(email);
+        reg.setApproved(false);
         em.persist(reg);
     }
 
@@ -41,14 +45,33 @@ public class RegistrationService {
         return mapEntityToDto(registrationEntityList);
     }
 
+    private RegistrationEntity getEntityToApprove(final String email) {
+        var registartionEntity =
+                em.createQuery("select r from RegistrationEntity r where r.email like :email", RegistrationEntity.class)
+                        .setParameter("email", email)
+                        .getResultStream()
+                        .findAny();
+        return registartionEntity.orElse(null);
+    }
+
+    @Transactional
+    public void approveEntity(final String email) {
+        RegistrationEntity registrationEntity = getEntityToApprove(email);
+        if (registrationEntity != null) {
+            registrationEntity.setApproved(true);
+            em.merge(registrationEntity);
+        }
+    }
+
     /**
      * Mapping RegistrationEntity to RegistrationDTO.
+     *
      * @param entityList list of RegistrationEntity
      * @return RegistrationDTO list
      */
     private List<RegistrationDTO> mapEntityToDto(final List<RegistrationEntity> entityList) {
         return entityList.stream()
-                .map(o -> new RegistrationDTO(o.getName(), o.getSurname(), o.getEmail()))
+                .map(o -> new RegistrationDTO(o.getName(), o.getSurname(), o.getEmail(), o.isApproved()))
                 .collect(Collectors.toList());
     }
 }

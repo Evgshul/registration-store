@@ -8,6 +8,7 @@
         <addColumn tableName="REGISTRATIONS">
             <column name="SURNAME" type="VARCHAR(255)"/>
             <column name="EMAIL" type="VARCHAR(255)"/>
+            <column name="APPROVED" type="BOOLEAN "/>
         </addColumn>
     </changeSet>
 

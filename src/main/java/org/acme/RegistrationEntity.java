@@ -35,6 +35,9 @@ public class RegistrationEntity {
     @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "APPROVED")
+    private boolean approved;
+
     public Long getId() {
         return id;
     }
@@ -65,5 +68,13 @@ public class RegistrationEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

@@ -17,7 +17,7 @@ class RegistrationResourceTest {
 
     @Test
     void testRegistration() {
-        var regIvan = new RegistrationDTO("Ivan", "Sidorov", "inan@mail.org");
+        var regIvan = new RegistrationDTO("Ivan", "Sidorov", "inan@mail.org", false);
         given()
                 .when()
                 .body(regIvan)

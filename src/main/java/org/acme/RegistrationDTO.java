@@ -22,7 +22,9 @@ public record RegistrationDTO(
         @NotBlank
         @NotNull
         @Email(regexp = EMAIL_REGEX)
-        String email
+        String email,
+
+        boolean approved
 ) {
         private final static String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 }

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 @Path("/registration")
 public class RegistrationResource {
@@ -57,6 +58,9 @@ public class RegistrationResource {
                         "Your registration is approved."
                 )
         );
+
+        registrationService.approveEntity(email);
+        LOG.debug("Registration for {} approved", email);
         return "Email sent successfully";
     }
 }
