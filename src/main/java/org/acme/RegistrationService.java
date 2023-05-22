@@ -4,11 +4,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -17,7 +14,6 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class RegistrationService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RegistrationService.class);
     @PersistenceContext
     EntityManager em;
 
@@ -46,12 +42,12 @@ public class RegistrationService {
     }
 
     private RegistrationEntity getEntityToApprove(final String email) {
-        var registartionEntity =
+        var registrationEntity =
                 em.createQuery("select r from RegistrationEntity r where r.email like :email", RegistrationEntity.class)
                         .setParameter("email", email)
                         .getResultStream()
                         .findAny();
-        return registartionEntity.orElse(null);
+        return registrationEntity.orElse(null);
     }
 
     @Transactional
