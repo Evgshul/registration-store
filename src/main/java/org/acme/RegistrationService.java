@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,6 +69,7 @@ public class RegistrationService {
     private List<RegistrationDTO> mapEntityToDto(final List<RegistrationEntity> entityList) {
         return entityList.stream()
                 .map(o -> new RegistrationDTO(o.getName(), o.getSurname(), o.getEmail(), o.isApproved()))
+                .sorted(Comparator.comparing(RegistrationDTO::name))
                 .collect(Collectors.toList());
     }
 }
